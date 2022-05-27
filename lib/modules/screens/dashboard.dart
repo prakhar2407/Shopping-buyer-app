@@ -18,9 +18,7 @@ class _DashboardState extends State<Dashboard> {
           child: Container(
               padding: EdgeInsets.only(top: 10),
               // child: ViewProduct(),//You can try this widget first to confirm firebase integration
-              child: Center(
-                child: ConfirmOrder(),
-              ))),
+              child: ConfirmOrder())),
     );
   }
 }
