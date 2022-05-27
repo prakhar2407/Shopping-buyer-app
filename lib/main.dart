@@ -8,6 +8,6 @@ void main(List<String> args)  async{
   runApp(MaterialApp(
     home: Dashboard(), //once initial route defined no need to mention home
     // initialRoute: RouteConstants.DASHBOARD, //inital or base route
-    // routes: getRoutes(), //all routes are loaded here 
+    // routes: getRoutes(), //all routes are loaded here
   ));
 }
