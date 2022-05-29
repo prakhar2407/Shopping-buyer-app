@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_buyer_app/modules/widgets/view_product.dart';
-import "./confirmOrder.dart";
+import "./confirmOrder2.dart";
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
