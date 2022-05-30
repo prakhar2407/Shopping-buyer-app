@@ -1,11 +1,4 @@
-// ignore_for_file: prefer_const_constructors
-// import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shopping_buyer_app/cubit/AddressCubit.dart';
-import 'package:shopping_buyer_app/cubit/OrderCubit.dart';
-import 'package:shopping_buyer_app/modules/models/order.dart';
 import 'package:snippet_coder_utils/FormHelper.dart';
 
 class dropdown extends StatefulWidget {
@@ -70,113 +63,165 @@ class _dropdownState extends State<dropdown> {
 
   @override
   Widget build(BuildContext context) {
-    OrderCubit orderCubit = BlocProvider.of<OrderCubit>(context);
-    AddressCubit addressCubit = BlocProvider.of<AddressCubit>(context);
-
-    String setAddressString() {
-      String zone = "";
-      print(countries.length);
-      for (int i = 0; i < countries.length; i++) {
-        if (countries[i]["id"].toString() == countryID) {
-          zone = countries[i]["label"];
-          print("zone loop" + zone);
-        }
-      }
-
-      for (int i = 0; i < statemaster.length; i++) {
-        if (statemaster[i]["ID"].toString() == stateID) {
-          zone = zone + ", " + statemaster[i]["Name"];
-        }
-      }
-      return zone +
-          ", " +
-          houseno_tc.text +
-          ", " +
-          street_tc.text +
-          ", " +
-          city_tc.text;
-    }
-
     return Scaffold(
-      appBar: AppBar(),
-      body: Column(
-        children: [
-          // FormHelper.dropDownWidget(context, hintText, value, lstData, onChanged, onValidate),
-          FormHelper.dropDownWidgetWithLabel(context, "Country Zone",
-              "enter zone", this.countryID, this.countries, (onChangedVal) {
-            this.countryID = onChangedVal;
-            print("selectCountry $onChangedVal");
-            // int.parse(onChangedVal);
-            // Map<String, Object> mp = countries[onChangedVal];
-            // print(mp["label"]);
-            this.states = this
-                .statemaster
-                .where(
-                  (stateItem) =>
-                      stateItem["ParentID"].toString() ==
-                      onChangedVal.toString(),
-                )
-                .toList();
-            this.stateID = null;
-            setState(() {});
-          }, (onValidateVal) {
-            if (onValidateVal == null) {
-              return "empty not allowed";
-            }
-            return null;
-          },
-              borderColor: Colors.black,
-              borderFocusColor: Colors.pink,
-              borderRadius: 10,
-              optionValue: "id", //ID
-              optionLabel: "label" // default id -name
+        backgroundColor: Color.fromARGB(255, 240, 240, 240),
+        appBar: AppBar(
+          backgroundColor: Colors.deepPurple,
+          actions: [],
+          // ignore: prefer_const_constructors
+          title: Center(
+              child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              "Residental Address",
+              style: TextStyle(
+                color: Color.fromARGB(255, 255, 255, 255),
+                // decoration: TextDecoration.underline,
+                // decorationStyle: TextDecorationStyle.solid,
               ),
-          FormHelper.dropDownWidgetWithLabel(
-              context, "States", "states", this.stateID, this.states,
-              (onChangedVal) {
-            this.stateID = onChangedVal;
-            print("Selected State : $onChangedVal");
-          }, (onValidate) {
-            return null;
-          },
-              borderColor: Colors.black,
-              borderFocusColor: Colors.pink,
-              borderRadius: 10,
-              optionValue: "ID", //ID
-              optionLabel: "Name"),
+            ),
+          )),
+        ),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Center(
+                child: Text("Please fill your Current Address"),
+              ),
+            ),
 
-          TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Enter city',
-            ),
-            controller: city_tc,
-          ),
-          TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Enter Street',
-              ),
-              controller: street_tc),
-          TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Enter house number',
-            ),
-            controller: houseno_tc,
-          ),
-          ElevatedButton(
-            onPressed: () {
-              String add = setAddressString();
-              Order order = Order();
-              order.delivery_address = add;
-              orderCubit.addData(order);
-              Navigator.pushNamed(context, "/dashboard");
+            // FormHelper.dropDownWidget(context, hintText, value, lstData, onChanged, onValidate),
+            FormHelper.dropDownWidgetWithLabel(
+                context,
+                "Country Zone",
+                "Select Your Zone",
+                this.countryID,
+                this.countries, (onChangedVal) {
+              this.countryID = onChangedVal;
+              print("selectCountry $onChangedVal");
+              this.states = this
+                  .statemaster
+                  .where(
+                    (stateItem) =>
+                        stateItem["ParentID"].toString() ==
+                        onChangedVal.toString(),
+                  )
+                  .toList();
+              this.stateID = null;
+              setState(() {});
+            }, (onValidateVal) {
+              if (onValidateVal == null) {
+                return "empty not allowed";
+              }
+              return null;
             },
-            child: Text("Submit"),
-          ),
-        ],
-      ),
-    );
+                borderColor: Colors.black,
+                borderFocusColor: Colors.deepPurple,
+                borderRadius: 10,
+                optionValue: "id", //ID
+                optionLabel: "label" // default id -name
+                ),
+            FormHelper.dropDownWidgetWithLabel(context, "States",
+                "Select Your State", this.stateID, this.states, (onChangedVal) {
+              this.stateID = onChangedVal;
+              print("Selected State : $onChangedVal");
+            }, (onValidate) {
+              return null;
+            },
+                borderColor: Colors.black,
+                borderFocusColor: Colors.deepPurple,
+                borderRadius: 10,
+                optionValue: "ID", //ID
+                optionLabel: "Name"),
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              // height: 200,
+              width: 490,
+              child: const TextField(
+                decoration: InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderSide:
+                        BorderSide(color: Colors.deepPurple, width: 1.8),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderSide: BorderSide(
+                        color: Color.fromARGB(255, 40, 39, 39), width: 1.3),
+                  ),
+                  hintText: 'Enter city',
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+
+            Container(
+              width: 490,
+              child: const TextField(
+                decoration: InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderSide:
+                        BorderSide(color: Colors.deepPurple, width: 1.8),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderSide: BorderSide(
+                        color: Color.fromARGB(255, 40, 39, 39), width: 1.3),
+                  ),
+                  hintText: 'Enter Street',
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+
+            Container(
+              width: 490,
+              child: const TextField(
+                decoration: InputDecoration(
+                  // border: OutlineInputBorder(
+                  //    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  //   borderSide: BorderSide(color: Colors.deepPurple),
+                  // ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderSide:
+                        BorderSide(color: Colors.deepPurple, width: 1.8),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    borderSide: BorderSide(
+                        color: Color.fromARGB(255, 40, 39, 39), width: 1.3),
+                  ),
+                  hintText: 'Enter house number',
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 40,
+            ),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.deepPurple,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0)),
+                ),
+                onPressed: () {},
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Save Your Details",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ))
+          ],
+        ));
   }
 }
