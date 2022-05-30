@@ -1,4 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shopping_buyer_app/cubit/AddressCubit.dart';
+import 'package:shopping_buyer_app/modules/models/address.dart';
 import 'package:shopping_buyer_app/modules/models/order.dart';
 
 import '../modules/models/product.dart';
@@ -8,9 +10,9 @@ class OrderCubit extends Cubit<Order> {
 
   late double amount;
 
-  void addData() {
-    const String address =
-        "Near Rotary Public School Cartarpuri Alias, Huda, Sector 23A, Gurugram, Haryana 122017";
+  void addData(Order order) {
+    // const String address =
+    //     "Near Rotary Public School Cartarpuri Alias, Huda, Sector 23A, Gurugram, Haryana 122017";
     List<Product> arr = [
       Product.takeProduct(
           name: "IPhone1",
@@ -74,9 +76,8 @@ class OrderCubit extends Cubit<Order> {
         .map((prodcut) => prodcut.price)
         .reduce((value, current) => value + current);
 
-    Order order = Order();
+    // Order order = Order();
     order.id = "1";
-    order.delivery_address = address;
     order.price = amount;
     this.amount = amount;
     order.products = arr;

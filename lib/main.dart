@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping_buyer_app/cubit/OrderCubit.dart';
 import 'package:shopping_buyer_app/modules/models/order.dart';
-import 'package:shopping_buyer_app/modules/screens/AddressInput.dart';
+// import 'package:shopping_buyer_app/modules/screens/AddressInput.dart';
 import 'package:shopping_buyer_app/modules/screens/dashboard.dart';
 import 'package:shopping_buyer_app/modules/screens/dropdown.dart';
+
+import 'cubit/AddressCubit.dart';
 
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +25,7 @@ void main(List<String> args) async {
     ),
     providers: [
       BlocProvider(create: (context) => OrderCubit(Order())),
+      BlocProvider(create: (context) => AddressCubit("")),
     ],
   ));
 }
